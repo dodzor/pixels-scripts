@@ -1,0 +1,38 @@
+import pyautogui
+import time
+import random
+
+def click_left_mouse_button():
+    pyautogui.click()
+
+if __name__ == "__main__":
+    try:
+        interval = float(input("Enter time interval in seconds: "))
+        print(f"Clicking left mouse button every {interval} seconds with random delay. Press Ctrl+C to stop.")
+        print("Wait for 3 seconds...")
+        time.sleep(3)
+
+        while True:
+            # Create
+            click_left_mouse_button()
+            random_delay = random.uniform(2, 3)
+            total_sleep_time = interval + random_delay
+            print(f"Clicked. Total sleep time after Create: {total_sleep_time} seconds")
+            time.sleep(total_sleep_time)
+
+            # Collect
+            click_left_mouse_button() 
+
+            # Wait for a random delay between 1 and 2 seconds
+            random_delay_between_clicks = random.uniform(2, 3)
+            print(f"Waiting for {random_delay_between_clicks} seconds before clicking Collect.")
+            time.sleep(random_delay_between_clicks)
+
+            # click_left_mouse_button()
+
+            # Wait for a random delay between 1 and 2 seconds
+            # random_delay_between_clicks = random.uniform(2, 3)
+            # print(f"Waiting for {random_delay_between_clicks} seconds before next click.")
+            # time.sleep(random_delay_between_clicks)
+    except KeyboardInterrupt:
+        print("Program terminated.")

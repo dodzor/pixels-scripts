@@ -1,0 +1,44 @@
+import requests
+from bs4 import BeautifulSoup
+import webbrowser
+import time
+
+def get_land_numbers():
+
+    url = "https://web3triads.com/lands/?land_page=1&land_size=Large&trees=Dense"
+    # url = "https://web3triads.com/lands/?land_page
+    # =10&land_size=Large&trees=Dense"
+    # url = "https://web3triads.com/lands/?land_page=1&trees=Dense"
+    # url = "https://web3triads.com/lands/?windmill=1"
+    # url = "https://web3triads.com/lands/?coop=1&apiary=4"
+    response = requests.get(url)
+    soup = BeautifulSoup(response.content, 'html.parser')
+    land_number_spans = soup.find_all('span', id='landnumber')
+    land_numbers = []
+    for land_number_span in land_number_spans:
+        # Extract the text from the span and convert it to an integer
+        land_number = int(''.join(filter(str.isdigit, land_number_span.text.strip())))
+        land_numbers.append(land_number)
+    return land_numbers
+
+
+def generate_link(id):
+    base_url = "https://play.pixels.xyz/pixels/share/"
+    link = base_url + str(id)
+    return link
+
+def open_links(ids):
+    for id in ids:
+        link = generate_link(id)
+        print("Generated link for ID {}: {}".format(id, link))
+        # Open the link in the default web browser
+        webbrowser.open(link)
+        time.sleep(10)
+
+def main():
+    land_numbers = get_land_numbers()
+    # ids = [land_number]  # Include land_number directly into the ids array
+    open_links(land_numbers)
+
+if __name__ == "__main__":
+    main()
